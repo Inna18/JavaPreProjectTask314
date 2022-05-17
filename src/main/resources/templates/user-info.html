@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Info</title>
+</head>
+<body>
+
+    <h2>User Info</h2>
+
+    <form action="#" th:action="@{/admin/saveUser}" th:object="${user}" method="POST">
+
+        <input type="hidden" th:field="*{id}">
+
+        <p>Name: <input type="text" th:field="*{name}" /></p> <p style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>
+        <p>Surname: <input type="text" th:field="*{surname}" /> </p> <p style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</p>
+        <p>Age: <input type="text" th:field="*{age}" /></p> <p style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</p>
+        <p>Email: <input type="text" th:field="*{email}" /></p> <p style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</p>
+        <p>Username: <input type="text" th:field="*{username}" /></p> <p style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</p>
+        <p>Password: <input type="text" th:field="*{password}" /></p> <p style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</p>
+        <p>Roles: <input type="text" th:field="*{roles}" /></p> <p style="color:red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">Roles error</p>
+        <input type="submit" value="OK"/>
+
+    </form>
+
+    </br>
+    </br>
+    <input type="button" value="Back" onclick="window.location.href='/admin'"/>
+
+    </br>
+    </br>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout"/>
+    </form>
+
+</body>
+</html>
