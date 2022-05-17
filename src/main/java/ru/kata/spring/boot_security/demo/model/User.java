@@ -55,15 +55,12 @@ public class User implements UserDetails {
     private String email;
 
     @Column(unique = true)
-    @NotEmpty(message = "Username field cannot be empty")
-    private String username;
-
-    @Column(unique = true)
     @NotEmpty(message = "Password field cannot be empty")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @NotEmpty(message = "User role cannot be empty")
     private Set<Role> roles = new HashSet<>();
 
 
@@ -80,7 +77,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override

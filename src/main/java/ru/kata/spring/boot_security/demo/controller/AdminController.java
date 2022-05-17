@@ -51,8 +51,7 @@ public class AdminController {
         try {
             userService.saveUser(user);
         } catch (Exception e) {
-            result.rejectValue("email", "user.email","An account with this username or email already exists.");
-            result.rejectValue("username", "user.username","An account with this username or email already exists.");
+            result.rejectValue("email", "user.email","Account with this username/email already exists.");
             return "user-info";
         }
 

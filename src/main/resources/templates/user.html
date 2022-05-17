@@ -12,8 +12,6 @@
     <p>Surname: <span sec:authentication="principal.surname">Surname</span></p>
     <p>Age: <span sec:authentication="principal.age">Age</span></p>
     <p>Email: <span sec:authentication="principal.email">Email</span></p>
-    <p>Username: <span sec:authentication="principal.username">Username</span></p>
-    <p>Password: <span sec:authentication="principal.password">Password</span></p>
     <p>Roles: <span sec:authentication="principal.authorities"></span></p>
     </br>
     <form th:action="@{/logout}" method="post">
