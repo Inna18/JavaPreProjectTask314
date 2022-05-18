@@ -8,11 +8,25 @@
     <h2>Hello, <span th:text="${#authentication.getPrincipal().getUsername()}"></span></h2>
 
     <h3>Personal Info</h3>
-    <p>Name: <span sec:authentication="principal.name">Name</span></p>
-    <p>Surname: <span sec:authentication="principal.surname">Surname</span></p>
-    <p>Age: <span sec:authentication="principal.age">Age</span></p>
-    <p>Email: <span sec:authentication="principal.email">Email</span></p>
-    <p>Roles: <span sec:authentication="principal.authorities"></span></p>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Roles</th>
+            </tr>
+
+            <tr>
+                <td sec:authentication="principal.id"></td>
+                <td sec:authentication="principal.name"></td>
+                <td sec:authentication="principal.surname"></td>
+                <td sec:authentication="principal.age"></td>
+                <td sec:authentication="principal.email"></td>
+                <td sec:authentication="principal.authorities"></td>
+            </tr>
+        </table>
     </br>
     <form th:action="@{/logout}" method="post">
         <input type="submit" value="Logout"/>
