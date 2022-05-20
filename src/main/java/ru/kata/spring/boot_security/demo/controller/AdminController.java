@@ -39,20 +39,20 @@ public class AdminController {
         User user = new User();
         model.addAttribute("user", user);
 
-        return "user-info";
+        return "save-user";
     }
 
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
         if (result.hasErrors()) {
-            return "user-info";
+            return "save-user";
         }
 
         try {
             userService.saveUser(user);
         } catch (Exception e) {
             result.rejectValue("email", "user.email","Account with this username/email already exists.");
-            return "user-info";
+            return "save-user";
         }
 
         return "redirect:/admin";
@@ -63,7 +63,7 @@ public class AdminController {
         User user = userService.findById(id);
         model.addAttribute("user", user);
 
-        return "user-info";
+        return "update-user";
     }
 
     @GetMapping("/deleteUser/{id}")
