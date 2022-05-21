@@ -10,7 +10,9 @@ public interface UserService {
 
     List<User> findAll();
 
-    boolean addOrUpdateUser(User user);
+    boolean addUser(User user);
+
+    boolean updateUser(User user);
 
     boolean deleteById(Long id);
 }

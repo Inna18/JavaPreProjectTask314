@@ -4,11 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
@@ -28,39 +24,25 @@ public class AdminController {
 
     @GetMapping
     public String showAllUsers(Model model) {
-        List<User> allUsers = userService.findAll();
-        model.addAttribute("allUsers", allUsers);
+        model.addAttribute("allUsers", userService.findAll());
+
+        if (!model.containsAttribute("user")) {
+            model.addAttribute("user", new User());
+        }
 
         return "all-users";
     }
 
-    @GetMapping("/addNewUser")
-    public String addNewUser(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
+    @PostMapping
+    public String addUser(@ModelAttribute("user") @Valid User user) {
+        userService.addUser(user);
 
-        return "save-user";
+        return "redirect:/admin";
     }
 
-    @GetMapping("/updateUser/{id}")
-    public String updateUser(@PathVariable(value = "id") Long id, Model model) {
-        User user = userService.findById(id);
-        model.addAttribute("user", user);
-
-        return "save-user";
-    }
-
-    @PostMapping("/saveUser")
-    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
-        if (result.hasErrors()) {
-            return "save-user";
-        }
-        try {
-            userService.addOrUpdateUser(user);
-        } catch (Exception e) {
-            result.rejectValue("email", "user.email","Account with this username/email already exists.");
-            return "save-user";
-        }
+    @PatchMapping
+    public String updateUser(@ModelAttribute("user") @Valid User user) {
+        userService.updateUser(user);
 
         return "redirect:/admin";
     }
