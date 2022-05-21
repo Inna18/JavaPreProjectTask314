@@ -42,28 +42,27 @@ public class AdminController {
         return "save-user";
     }
 
+    @GetMapping("/updateUser/{id}")
+    public String updateUser(@PathVariable(value = "id") Long id, Model model) {
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+
+        return "save-user";
+    }
+
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
         if (result.hasErrors()) {
             return "save-user";
         }
-
         try {
-            userService.saveUser(user);
+            userService.addOrUpdateUser(user);
         } catch (Exception e) {
             result.rejectValue("email", "user.email","Account with this username/email already exists.");
             return "save-user";
         }
 
         return "redirect:/admin";
-    }
-
-    @GetMapping("/updateUser/{id}")
-    public String updateUser(@PathVariable(value = "id") Long id, Model model) {
-        User user = userService.findById(id);
-        model.addAttribute("user", user);
-
-        return "update-user";
     }
 
     @GetMapping("/deleteUser/{id}")

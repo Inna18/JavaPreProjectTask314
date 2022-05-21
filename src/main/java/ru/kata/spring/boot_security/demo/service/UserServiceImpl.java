@@ -45,18 +45,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public List<User> findAll() {
+        return userDao.findAll();
+    }
+
+    @Override
     public User findById(Long id) {
         Optional<User> userFromDB = userDao.findById(id);
         return userFromDB.orElse(new User());
     }
 
     @Override
-    public List<User> findAll() {
-        return userDao.findAll();
-    }
-
-    @Override
-    public boolean saveUser(User user) {
+    public boolean addOrUpdateUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.save(user);
         return true;

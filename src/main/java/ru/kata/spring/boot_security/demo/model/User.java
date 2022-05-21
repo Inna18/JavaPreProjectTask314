@@ -23,6 +23,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -62,8 +63,6 @@ public class User implements UserDetails {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     @NotEmpty(message = "User role cannot be empty")
     private Set<Role> roles = new HashSet<>();
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

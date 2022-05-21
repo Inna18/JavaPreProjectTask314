@@ -15,56 +15,176 @@
 </head>
 <body>
 
-    <!-- Navigation panel -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
+<!--Top Nav-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
                 <span class="navbar-text">
                     <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
                     <span> with roles: </span>
-                    <span sec:authentication="principal.authorities"></span>
+                    <th:block th:each="role : ${#authentication.authorities}">
+    &nbsp;               <span th:text="${role.getName()}"/>
+                    </th:block>
                 </span>
-            <span class="navbar-nav">
+        <span class="navbar-nav">
                     <a class="nav-link" href="/logout">Logout</a>
                 </span>
-        </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Overall container -->
-    <div class="container-fluid vw-100 vh-100">
-        <div class="row h-100">
-            <!-- Left col: Nav -->
-            <div class="col pt-2">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Admin</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">User</a>
-                    </li>
-                </ul>
+<!--Admin User Nav-->
+<div class="d-flex align-items-start" style="width: 100%;">
+    <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <button class="nav-link active text-start" id="v-pills-admin-tab" data-bs-toggle="pill" data-bs-target="#v-pills-admin"
+                type="button" role="tab" aria-controls="v-pills-admin" aria-selected="true" style="width: 10rem;">Admin
+        </button>
+        <button class="nav-link text-start" id="v-pills-user-tab" data-bs-toggle="pill" data-bs-target="#v-pills-user"
+                type="button" role="tab" aria-controls="v-pills-user" aria-selected="false" style="width: 10rem;">User
+        </button>
+    </div>
+    <div class="tab-content flex-fill" id="v-pills-tabContent">
+
+        <!--Admin-->
+        <div class="tab-pane show active" id="v-pills-admin" role="tabpanel" aria-labelledby="v-pills-admin-tab">
+            <div class="container-fluid bg-light p-3 vh-100">
+                <div class="row">
+                    <div class="col">
+                        <div class="container-fluid">
+                            <h3>Admin panel</h3>
+
+                            <!-- Tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#usersTable" data-bs-toggle="tab">Users Table</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#addNewUser" data-bs-toggle="tab">New User</a>
+                                </li>
+                            </ul>
+
+                            <!-- Tabs content -->
+                            <div class="tab-content">
+
+                                <!-- User Table Tab-->
+                                <div class="tab-pane show active" id="usersTable">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            All users
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <table class="table table-hover mt-1">
+                                                    <thead class="table-light">
+                                                    <tr>
+                                                        <th class="text-center">ID</th>
+                                                        <th class="text-center">Name</th>
+                                                        <th class="text-center">Surname</th>
+                                                        <th class="text-center">Age</th>
+                                                        <th class="text-center">Email</th>
+                                                        <th class="text-center">Roles</th>
+                                                        <th class="text-center">Operations</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="user : ${allUsers}">
+                                                        <td class="text-center" th:text="${user.id}"></td>
+                                                        <td class="text-center" th:text="${user.name}"></td>
+                                                        <td class="text-center" th:text="${user.surname}"></td>
+                                                        <td class="text-center" th:text="${user.age}"></td>
+                                                        <td class="text-center" th:text="${user.email}"></td>
+                                                        <td class="text-center">
+                                                            <span th:each="role : ${user.roles}"
+                                                                  th:text="${role.name}+' '">
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a th:href="@{/admin/updateUser/{id}(id=${user.id})}">
+                                                            <button type="button" class="btn btn-primary btn-sm mr-1" >
+                                                                Update
+                                                            </button>
+                                                            </a>
+                                                            <a th:href="@{/admin/deleteUser/{id}(id=${user.id})}">
+                                                                <button type="button" class="btn btn-danger btn-sm">
+                                                                    Delete
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Add User Tab-->
+                                <div class="tab-pane" id="addNewUser">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Add new user
+                                        </div>
+                                        <div class="card-body">
+                                            Add New User Form
+<!--                                            <form role="form" id="addNewUserForm" th:action="@{/admin/saveUser}" th:object="${user}" th:method="POST">-->
+
+<!--                                                <div class="form-group mb-3">-->
+<!--                                                    <label for="newName">Name</label>-->
+<!--                                                    <input type="text" th:field="*{name}" placeholder="Name" class="form-control" id="newName"/>-->
+<!--                                                </div>-->
+<!--                                                <div class="form-group mb-3">-->
+<!--                                                    <label for="newSurname">Surname</label>-->
+<!--                                                    <input type="text" th:field="*{surname}" placeholder="Surname" class="form-control" id="newSurname"/>-->
+<!--                                                </div>-->
+<!--                                                <div class="form-group mb-3">-->
+<!--                                                    <label for="newAge">Age</label>-->
+<!--                                                    <input type="text" th:field="*{age}" placeholder="Age" class="form-control" id="newAge"/>-->
+
+<!--                                                </div>-->
+<!--                                                <div class="form-group mb-3">-->
+<!--                                                    <label for="newEmail">Email</label>-->
+<!--                                                    <input type="text" th:field="*{email}" placeholder="Email" class="form-control" id="newEmail"/>-->
+<!--                                                </div>-->
+<!--                                                <div class="form-group mb-3">-->
+<!--                                                    <label for="newPassword">Password</label>-->
+<!--                                                    <input type="text" th:field="*{password}" placeholder="Password" class="form-control" id="newPassword"/>-->
+<!--                                                </div>-->
+<!--                                                <div class="form-group mb-3">-->
+<!--                                                    <label for="newRoles">Roles</label>-->
+<!--                                                    <select multiple class="form-control" id="newRoles" name="roles">-->
+<!--                                                        <option th:each="role : ${roles}"-->
+<!--                                                                th:selected="*{hasRole('__${role.id}__')}" th:text="${role.name}"-->
+<!--                                                                th:value="${role.id}">-->
+<!--                                                    </select>-->
+<!--                                                </div>-->
+
+<!--                                                <div class="box-footer">-->
+<!--                                                    <input type="submit" class="btn btn-success" value="Add" />-->
+<!--                                                </div>-->
+
+<!--                                            </form>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <input type="button" value="Add" onclick="window.location.href='/admin/addNewUser'"/>
+
+                    </div>
+                </div>
             </div>
-            <!-- Right col: Main -->
-            <div class="col-10 bg-light pt-2">
-                <div class="container-fluid">
-                    <input type="button" value="My Personal Info" onclick="window.location.href='/user'"/>
-                    <br />
+        </div>
 
-                    <h2>Admin panel</h2>
+        <!--User-->
+        <div class="tab-pane" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-user-tab">
+            <div class="container-fluid bg-light p-3 vh-100">
+                <div class="row">
+                    <div class="col">
+                        <div class="container-fluid">
+                            <h3>User information-page</h3>
 
-                    <!-- Tabs -->
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item"><a class="nav-link active" href="#usersTable" data-bs-toggle="tab">Users Table</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#addNewUser" data-bs-toggle="tab">New User</a>
-                        </li>
-                    </ul>
-
-                    <!-- Tabs content -->
-                    <div class="tab-content">
-                        <!-- User Table Tab-->
-                        <div class="tab-pane active" id="usersTable">
-                            <div class="card" >
+                            <div class="card">
                                 <div class="card-header">
-                                    All users
+                                    About user
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
@@ -77,52 +197,21 @@
                                                 <th class="text-center">Age</th>
                                                 <th class="text-center">Email</th>
                                                 <th class="text-center">Roles</th>
-                                                <th class="text-center">Operations</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="user : ${allUsers}">
-                                                <td class="text-center" th:text="${user.id}"></td>
-                                                <td class="text-center" th:text="${user.name}"></td>
-                                                <td class="text-center" th:text="${user.surname}"></td>
-                                                <td class="text-center" th:text="${user.age}"></td>
-                                                <td class="text-center" th:text="${user.email}"></td>
-                                                <td class="text-center"><span th:each="role : ${user.roles}"
-                                                                              th:text="${role.name}+' '"></span>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a th:href="@{/admin/updateUser/{id}(id=${user.id})}">
-                                                        <button type="button" class="btn btn-primary btn-sm mr-1">
-                                                            Update
-                                                        </button>
-                                                    </a>
-                                                    <a th:href="@{/admin/deleteUser/{id}(id=${user.id})}">
-                                                        <button type="button" class="btn btn-danger btn-sm">
-                                                            Delete
-                                                        </button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- Add User Tab-->
-                        <div class="tab-pane active" id="addNewUser">
-                            <div class="card" >
-                                <div class="card-header">
-                                    Add new user
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <table class="table table-hover mt-1">
-                                            <thead class="table-light">
                                             <tr>
+                                                <td class="text-center" sec:authentication="principal.id"></td>
+                                                <td class="text-center" sec:authentication="principal.name"></td>
+                                                <td class="text-center" sec:authentication="principal.surname"></td>
+                                                <td class="text-center" sec:authentication="principal.age"></td>
+                                                <td class="text-center" sec:authentication="principal.email"></td>
+                                                <td class="text-center">
+                                                    <th:block th:each="role : ${#authentication.authorities}">
+                                                        <span th:text="${role.getName()}"/>
+                                                    </th:block>
+                                                </td>
                                             </tr>
-                                            </thead>
-                                            <tbody>
                                             </tbody>
                                         </table>
                                     </li>
@@ -131,66 +220,76 @@
                         </div>
                     </div>
                 </div>
-
-                <br/>
-                <input type="button" value="Add" onclick="window.location.href='/admin/addNewUser'"/>
             </div>
         </div>
     </div>
+</div>
 
+<!--Update Modal-->
+<!--<div class="myForm">-->
+<!--    <div class="modal" id="updateModal">-->
+<!--        <form th:action="@{/admin/saveUser}" th:object="${user}" method="POST">-->
+<!--            <div class="modal-dialog">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                        <h5 class="modal-title">Update user</h5>-->
+<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        <input type="hidden" th:field="*{id}">-->
 
-    <!--Modal-->
-    <div class="myForm">
-        <form th:action="@{saveUser}" method="POST">
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Update User</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="id" class="col-form-label">ID:</label>
-                                <input type="text" class="form-control" id="id" name="id" value="" />
-                            </div>
-                            <div class="form-group">
-                                <label for="name" class="col-form-label">Name:</label>
-                                <input type="text" class="form-control" id="name" name="name" value="" />
-                            </div>
-                            <div class="form-group">
-                                <label for="surname" class="col-form-label">Surname:</label>
-                                <input type="text" class="form-control" id="surname" name="surname" value="" />
-                            </div>
-                            <div class="form-group">
-                                <label for="age" class="col-form-label">Age:</label>
-                                <input type="text" class="form-control" id="age" name="age" value="" />
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="col-form-label">Email:</label>
-                                <input type="text" class="form-control" id="email" name="email" value="" />
-                            </div>
-                            <div class="form-group">
-                                <label for="roles" class="col-form-label">Roles:</label>
-                                <input type="text" class="form-control" id="roles" name="roles" value="" />
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ></button>
-                            <input type="submit" class="btn btn-primary" value="Update" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+<!--                        <div class="form-group">-->
+<!--                            <label for="updateID">ID</label>-->
+<!--                            <input type="text" class="form-control" id="updateID" placeholder="ID" th:field="*{id}">-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="updateName">Name</label>-->
+<!--                            <input type="text" class="form-control" id="updateName" placeholder="Name" th:field="*{name}">-->
+<!--                            <p style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="updateSurname">Surname</label>-->
+<!--                            <input type="text" class="form-control" id="updateSurname" placeholder="Surname" th:field="*{surname}">-->
+<!--                            <p style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</p>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="updateAge">Age</label>-->
+<!--                            <input type="text" class="form-control" id="updateAge" placeholder="Age" th:field="*{age}">-->
+<!--                            <p style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</p>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="updateEmail">Email</label>-->
+<!--                            <input type="text" class="form-control" id="updateEmail" placeholder="Email" th:field="*{email}">-->
+<!--                            <p style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</p>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="updatePassword">Password</label>-->
+<!--                            <input type="text" class="form-control" id="updatePassword" placeholder="Password" th:field="*{password}">-->
+<!--                            <p style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</p>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="updateRoles">Roles</label>-->
+<!--                            <input type="text" class="form-control" id="updateRoles" placeholder="Roles" th:field="*{id}">-->
+<!--                            <p style="color:red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">Roles error</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                        <button type="submit" class="btn btn-primary">Update</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
 
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-            crossorigin="anonymous"></script>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </body>
 </html>
