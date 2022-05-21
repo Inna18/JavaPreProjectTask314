@@ -30,6 +30,7 @@ public class AdminController {
             model.addAttribute("user", new User());
         }
 
+
         return "all-users";
     }
 
@@ -40,6 +41,13 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @GetMapping("/{id}")
+    public String showUserProfileModal(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("user", userService.findById(id));
+
+        return "fragments/user-form-modal";
+    }
+
     @PatchMapping
     public String updateUser(@ModelAttribute("user") @Valid User user) {
         userService.updateUser(user);
@@ -47,9 +55,9 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/deleteUser/{id}")
-    public String deleteUser(@PathVariable(value = "id") Long id) {
-        userService.deleteById(id);
+    @DeleteMapping
+    public String deleteUser(@ModelAttribute("user") User user) {
+        userService.deleteById(user.getId());
 
         return "redirect:/admin";
     }

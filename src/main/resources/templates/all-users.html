@@ -97,13 +97,14 @@
                                                             </span>
                                                         </td>
                                                         <td class="text-center">
-                                                            <a th:href="@{/admin/updateUser/{id}(id=${user.id})}">
-                                                                <button type="button" class="btn btn-primary btn-sm mr-1" >
+                                                            <a th:href="@{/admin/{id}(id=${user.id})}">
+                                                                <button type="button"
+                                                                        class="btn btn-info btn-sm update-button mr-1">
                                                                     Update
                                                                 </button>
                                                             </a>
-                                                            <a th:href="@{/admin/deleteUser/{id}(id=${user.id})}">
-                                                                <button type="button" class="btn btn-danger btn-sm">
+                                                            <a th:href="@{/admin/{id}(id=${user.id})}">
+                                                                <button type="button" class="btn btn-danger btn-sm delete-button">
                                                                     Delete
                                                                 </button>
                                                             </a>
@@ -218,63 +219,17 @@
     </div>
 </div>
 
-<!--Update Modal-->
-<!--<div class="myForm">-->
-<!--    <div class="modal" id="updateModal">-->
-<!--        <form th:action="@{/admin/saveUser}" th:object="${user}" method="POST">-->
-<!--            <div class="modal-dialog">-->
-<!--                <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                        <h5 class="modal-title">Update user</h5>-->
-<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                    </div>-->
-<!--                    <div class="modal-body">-->
-<!--                        <input type="hidden" th:field="*{id}">-->
 
-<!--                        <div class="form-group">-->
-<!--                            <label for="updateID">ID</label>-->
-<!--                            <input type="text" class="form-control" id="updateID" placeholder="ID" th:field="*{id}">-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="updateName">Name</label>-->
-<!--                            <input type="text" class="form-control" id="updateName" placeholder="Name" th:field="*{name}">-->
-<!--                            <p style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="updateSurname">Surname</label>-->
-<!--                            <input type="text" class="form-control" id="updateSurname" placeholder="Surname" th:field="*{surname}">-->
-<!--                            <p style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</p>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="updateAge">Age</label>-->
-<!--                            <input type="text" class="form-control" id="updateAge" placeholder="Age" th:field="*{age}">-->
-<!--                            <p style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</p>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="updateEmail">Email</label>-->
-<!--                            <input type="text" class="form-control" id="updateEmail" placeholder="Email" th:field="*{email}">-->
-<!--                            <p style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</p>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="updatePassword">Password</label>-->
-<!--                            <input type="text" class="form-control" id="updatePassword" placeholder="Password" th:field="*{password}">-->
-<!--                            <p style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</p>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="updateRoles">Roles</label>-->
-<!--                            <input type="text" class="form-control" id="updateRoles" placeholder="Roles" th:field="*{id}">-->
-<!--                            <p style="color:red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">Roles error</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="modal-footer">-->
-<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                        <button type="submit" class="btn btn-primary">Update</button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
+<!--Modal-->
+<div id="user-profile" class="modal fade">
+    <div class="modal-dialog">
+        <div th:replace="fragments/user-form-modal"/>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
 
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
