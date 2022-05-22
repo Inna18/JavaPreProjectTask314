@@ -1,0 +1,14 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+                <span class="navbar-text">
+                    <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+                    <span> with roles: </span>
+                    <th:block th:each="role : ${#authentication.authorities}">
+    &nbsp;               <span th:text="${role.getName()}"/>
+                    </th:block>
+                </span>
+    <span class="navbar-nav">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </span>
+  </div>
+</nav>

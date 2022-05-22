@@ -1,0 +1,35 @@
+<form action="#" th:action="@{/admin}" th:object="${user}"
+      method="POST">
+    <div class="form-group mb-3">
+        <label>Name</label>
+        <input type="text" th:field="*{name}" placeholder="Name" class="form-control"/>
+    </div>
+    <div class="form-group mb-3">
+        <label>Surname</label>
+        <input type="text" th:field="*{surname}" placeholder="Surname" class="form-control"/>
+    </div>
+    <div class="form-group mb-3">
+        <label>Age</label>
+        <input type="text" th:field="*{age}" placeholder="Age"
+               class="form-control"/>
+    </div>
+    <div class="form-group mb-3">
+        <label>Email</label>
+        <input type="text" th:field="*{email}" placeholder="Email"
+               class="form-control"/>
+    </div>
+    <div class="form-group mb-3">
+        <label>Password</label>
+        <input type="text" th:field="*{password}" placeholder="Password"
+               class="form-control"/>
+    </div>
+    <div class="form-group mb-3">
+        <label>Roles</label>
+        <input type="text" th:field="*{roles}" placeholder="Role ID"
+               class="form-control"/>
+    </div>
+
+    <div class="box-footer">
+        <input type="submit" class="btn btn-success" value="Add"/>
+    </div>
+</form>

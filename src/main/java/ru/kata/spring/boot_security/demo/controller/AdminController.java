@@ -9,7 +9,6 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,8 +29,14 @@ public class AdminController {
             model.addAttribute("user", new User());
         }
 
-
         return "all-users";
+    }
+
+    @GetMapping("/{id}")
+    public String showUserProfileModal(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("user", userService.findById(id));
+
+        return "user-update-modal";
     }
 
     @PostMapping
@@ -39,13 +44,6 @@ public class AdminController {
         userService.addUser(user);
 
         return "redirect:/admin";
-    }
-
-    @GetMapping("/{id}")
-    public String showUserProfileModal(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-
-        return "fragments/user-form-modal";
     }
 
     @PatchMapping

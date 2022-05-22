@@ -1,0 +1,26 @@
+<table class="table table-hover mt-1">
+    <thead class="table-light">
+    <tr>
+        <th class="text-center">ID</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Surname</th>
+        <th class="text-center">Age</th>
+        <th class="text-center">Email</th>
+        <th class="text-center">Roles</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="text-center" sec:authentication="principal.id"></td>
+        <td class="text-center" sec:authentication="principal.name"></td>
+        <td class="text-center" sec:authentication="principal.surname"></td>
+        <td class="text-center" sec:authentication="principal.age"></td>
+        <td class="text-center" sec:authentication="principal.email"></td>
+        <td class="text-center">
+            <th:block th:each="role : ${#authentication.authorities}">
+                <span th:text="${role.getName()}"/>
+            </th:block>
+        </td>
+    </tr>
+    </tbody>
+</table>

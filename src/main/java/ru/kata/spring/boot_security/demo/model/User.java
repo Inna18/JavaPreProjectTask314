@@ -64,9 +64,17 @@ public class User implements UserDetails {
     @NotEmpty(message = "User role cannot be empty")
     private Set<Role> roles = new HashSet<>();
 
+    public boolean hasRole(int roleId) {
+        if (null == roles || 0 == roles.size()) {
+            return false;
+        }
+        Optional<Role> findRole = roles.stream().filter(role -> roleId == role.getId()).findFirst();
+        return findRole.isPresent();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return roles;
     }
 
     @Override

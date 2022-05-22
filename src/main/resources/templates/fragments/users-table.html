@@ -1,0 +1,41 @@
+<table class="table table-hover mt-1">
+    <thead class="table-light">
+    <tr>
+        <th class="text-center">ID</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Surname</th>
+        <th class="text-center">Age</th>
+        <th class="text-center">Email</th>
+        <th class="text-center">Roles</th>
+        <th class="text-center">Operations</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${allUsers}">
+        <td class="text-center" th:text="${user.id}"></td>
+        <td class="text-center" th:text="${user.name}"></td>
+        <td class="text-center" th:text="${user.surname}"></td>
+        <td class="text-center" th:text="${user.age}"></td>
+        <td class="text-center" th:text="${user.email}"></td>
+        <td class="text-center">
+            <span th:each="role : ${user.roles}"
+                  th:text="${role.name}+' '">
+            </span>
+        </td>
+        <td class="text-center">
+            <a th:href="@{/admin/{id}(id=${user.id})}">
+                <button type="button"
+                        class="btn btn-info btn-sm update-button mr-1">
+                    Update
+                </button>
+            </a>
+            <a th:href="@{/admin/{id}(id=${user.id})}">
+                <button type="button"
+                        class="btn btn-danger btn-sm delete-button">
+                    Delete
+                </button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
