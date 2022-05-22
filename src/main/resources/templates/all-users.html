@@ -120,10 +120,17 @@
 </div>
 
 
-<!--Modal-->
-<div id="user-profile" class="modal fade">
-    <div class="modal-dialog">
+<!--Update Modal-->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div th:replace="fragments/user-update-modal"/>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div th:replace="fragments/user-delete-modal"/>
     </div>
 </div>
 

@@ -23,15 +23,19 @@
             </span>
         </td>
         <td class="text-center">
-            <a th:href="@{/admin/{id}(id=${user.id})}">
+            <a>
                 <button type="button"
-                        class="btn btn-info btn-sm update-button mr-1">
+                        class="btn btn-info btn-sm update-button mr-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#updateModal">
                     Update
                 </button>
             </a>
-            <a th:href="@{/admin/{id}(id=${user.id})}">
+            <a>
                 <button type="button"
-                        class="btn btn-danger btn-sm delete-button">
+                        class="btn btn-danger btn-sm delete-button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal">
                     Delete
                 </button>
             </a>
