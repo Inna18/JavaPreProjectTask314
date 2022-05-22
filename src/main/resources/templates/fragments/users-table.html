@@ -23,13 +23,11 @@
             </span>
         </td>
         <td class="text-center">
-            <a>
-                <button type="button"
-                        class="btn btn-info btn-sm update-button mr-1"
-                        data-bs-toggle="modal"
-                        data-bs-target="#updateModal">
-                    Update
-                </button>
+            <a th:href="@{/admin/findOne/{id}(id=${user.id})}"
+               class="btn btn-info btn-sm update-button mr-1"
+               data-bs-toggle="modal"
+               data-bs-target="#updateModal">
+                Update
             </a>
             <a>
                 <button type="button"

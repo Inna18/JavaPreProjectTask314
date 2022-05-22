@@ -24,6 +24,7 @@ public class AdminController {
     @GetMapping
     public String showAllUsers(Model model) {
         model.addAttribute("allUsers", userService.findAll());
+        model.addAttribute("allRoles", userService.findAllRoles());
 
         if (!model.containsAttribute("user")) {
             model.addAttribute("user", new User());
@@ -32,15 +33,15 @@ public class AdminController {
         return "all-users";
     }
 
-    @GetMapping("/{id}")
-    public String showUserProfileModal(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/findOne/{id}")
+    public String findOne(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.findById(id));
 
-        return "user-update-modal";
+        return "fragments/user-update-modal";
     }
 
     @PostMapping
-    public String addUser(@ModelAttribute("user") @Valid User user) {
+    public String addUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
         userService.addUser(user);
 
         return "redirect:/admin";
