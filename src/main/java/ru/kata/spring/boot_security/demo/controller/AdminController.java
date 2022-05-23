@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
@@ -33,13 +37,6 @@ public class AdminController {
         return "all-users";
     }
 
-    @GetMapping("/findOne/{id}")
-    public String findOne(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-
-        return "fragments/user-update-modal";
-    }
-
     @PostMapping
     public String addUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
         userService.addUser(user);
@@ -47,14 +44,14 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PatchMapping
+    @PutMapping
     public String updateUser(@ModelAttribute("user") @Valid User user) {
         userService.updateUser(user);
 
         return "redirect:/admin";
     }
 
-    @DeleteMapping
+    @GetMapping("/delete")
     public String deleteUser(@ModelAttribute("user") User user) {
         userService.deleteById(user.getId());
 

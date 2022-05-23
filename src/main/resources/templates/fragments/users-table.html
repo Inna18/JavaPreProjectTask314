@@ -23,19 +23,17 @@
             </span>
         </td>
         <td class="text-center">
-            <a th:href="@{/admin/findOne/{id}(id=${user.id})}"
-               class="btn btn-info btn-sm update-button mr-1"
-               data-bs-toggle="modal"
-               data-bs-target="#updateModal">
+            <a data-bs-toggle="modal"
+               data-row="${user}"
+               th:attr="data-bs-target=${'#updateModal'+user.id}"
+               class="btn btn-info btn-sm mr-1">
                 Update
             </a>
-            <a>
-                <button type="button"
-                        class="btn btn-danger btn-sm delete-button"
-                        data-bs-toggle="modal"
-                        data-bs-target="#deleteModal">
-                    Delete
-                </button>
+            <a data-bs-toggle="modal"
+               data-row="${user}"
+               th:attr="data-bs-target=${'#deleteModal'+user.id}"
+               class="btn btn-danger btn-sm mr-1">
+                Delete
             </a>
         </td>
     </tr>
