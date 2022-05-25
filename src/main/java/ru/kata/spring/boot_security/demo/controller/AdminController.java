@@ -39,7 +39,7 @@ public class AdminController {
 
     @PostMapping
     public String addUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
-        userService.addUser(user);
+        userService.saveUser(user);
 
         return "redirect:/admin";
     }

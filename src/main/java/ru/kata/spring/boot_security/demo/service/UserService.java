@@ -11,7 +11,7 @@ public interface UserService {
 
     List<User> findAll();
 
-    boolean addUser(User user);
+    boolean saveUser(User user);
 
     boolean updateUser(User user);
 
