@@ -10,14 +10,12 @@
           rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
           crossorigin="anonymous">
-    <script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
             crossorigin="anonymous"></script>
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <title>Admin panel</title>
 </head>
 <body>
 
@@ -51,7 +49,7 @@
                                     <a class="nav-link active" href="#usersTable" data-bs-toggle="tab">Users Table</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#addNewUser" data-bs-toggle="tab">New User</a>
+                                    <a id="newUserTab" class="nav-link" href="#addNewUser" data-bs-toggle="tab">New User</a>
                                 </li>
                             </ul>
 
@@ -120,18 +118,21 @@
 
 
 <!--Update Modal-->
-<div th:each="user : ${allUsers}" th:attr="id=${'updateModal'+user.id}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+<div id="updateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div th:replace="fragments/user-update-modal"/>
     </div>
 </div>
 
 <!--Delete Modal-->
-<div th:each="user : ${allUsers}" th:attr="id=${'deleteModal'+user.id}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div th:replace="fragments/user-delete-modal"/>
     </div>
 </div>
+
+<!-- JavaScript main.js link -->
+<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
 
 </body>
 </html>

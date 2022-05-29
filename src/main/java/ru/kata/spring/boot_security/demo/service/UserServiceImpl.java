@@ -62,10 +62,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        User userFromDB = userDao.findByEmail(email);
+        return userFromDB;
+    }
+
+    @Override
     public boolean saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.save(user);
-
         return true;
     }
 

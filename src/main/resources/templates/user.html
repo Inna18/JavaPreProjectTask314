@@ -11,6 +11,17 @@
           rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
           crossorigin="anonymous">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+          crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>User Information Page</title>
 </head>
 <body>
@@ -19,7 +30,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
                 <span class="navbar-text">
-                    <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+                    <span id="userOneUsername" th:text="${#authentication.getPrincipal().getUsername()}"></span>
                     <span> with roles: </span>
                     <th:block th:each="role : ${#authentication.authorities}">
     &nbsp;               <span th:text="${role.getName()}"/>
@@ -65,19 +76,7 @@
                                                 <th class="text-center">Roles</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td class="text-center" sec:authentication="principal.id"></td>
-                                                <td class="text-center" sec:authentication="principal.name"></td>
-                                                <td class="text-center" sec:authentication="principal.surname"></td>
-                                                <td class="text-center" sec:authentication="principal.age"></td>
-                                                <td class="text-center" sec:authentication="principal.email"></td>
-                                                <td class="text-center">
-                                                <th:block th:each="role : ${#authentication.authorities}">
-                                                    <span th:text="${role.getName()}"/>
-                                                </th:block>
-                                                </td>
-                                            </tr>
+                                            <tbody id="userOneUserTableBody">
                                             </tbody>
                                         </table>
                                     </li>
@@ -91,10 +90,7 @@
     </div>
 </div>
 
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-        crossorigin="anonymous"></script>
-
+<!-- JavaScript main.js link -->
+<script type="text/javascript" src="../static/js/user.js" th:src="@{js/user.js}"></script>
 </body>
 </html>

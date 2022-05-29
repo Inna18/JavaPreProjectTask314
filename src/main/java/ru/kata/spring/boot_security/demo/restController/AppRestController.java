@@ -1,11 +1,14 @@
 package ru.kata.spring.boot_security.demo.restController;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.exceptionHandling.NoSuchUserException;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -37,19 +40,30 @@ public class AppRestController {
         return user;
     }
 
-    @PostMapping("/users")
-    public User addNewUser(@RequestBody User user) {
-        userService.saveUser(user);
+    @GetMapping("/user")
+    public User getUserByEmail(Principal principal) {
+        User user = userService.findByEmail(principal.getName());
 
+        return user;
+    }
+
+    @PostMapping("/users")
+    public User addNewUser(@Valid @RequestBody User user, BindingResult result) {
+        try {
+            userService.saveUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
     @PutMapping("/users")
-    public User updateUser(@RequestBody User user) {
+    public User updateUser(@Valid @RequestBody User user) {
         userService.saveUser(user);
 
         return user;
     }
+
 
     @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable Long id) {
@@ -61,6 +75,5 @@ public class AppRestController {
 
         return "User with ID - " + id + " was deleted successfully";
     }
-
 
 }

@@ -26,34 +26,25 @@ public class AdminController {
     }
 
     @GetMapping
-    public String showAllUsers(Model model) {
-        model.addAttribute("allUsers", userService.findAll());
-        model.addAttribute("allRoles", userService.findAllRoles());
-
-        if (!model.containsAttribute("user")) {
-            model.addAttribute("user", new User());
-        }
+    public String showAllUsers() {
 
         return "all-users";
     }
 
     @PostMapping
-    public String addUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
-        userService.saveUser(user);
+    public String addUser() {
 
         return "redirect:/admin";
     }
 
     @PutMapping
-    public String updateUser(@ModelAttribute("user") @Valid User user) {
-        userService.updateUser(user);
+    public String updateUser() {
 
         return "redirect:/admin";
     }
 
     @GetMapping("/delete")
-    public String deleteUser(@ModelAttribute("user") User user) {
-        userService.deleteById(user.getId());
+    public String deleteUser() {
 
         return "redirect:/admin";
     }
