@@ -8,16 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.ManyToMany;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.FetchType;
+import javax.persistence.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -59,7 +50,7 @@ public class User implements UserDetails {
     @NotEmpty(message = "Password field cannot be empty")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     //@NotEmpty(message = "User role cannot be empty")
     private Set<Role> roles = new HashSet<>();

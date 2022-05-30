@@ -2,8 +2,6 @@
 const url = "http://localhost:8080/api/users";
 const url1 = "http://localhost:8080/api/user"
 
-
-// Show All Users, GET_Method
 const adminContainer = document.getElementById("allUsersTableBody");
 
 const addUserForm = document.getElementById("addUserForm");
@@ -14,8 +12,33 @@ const addEmail = document.getElementById("addEmail");
 const addPassword = document.getElementById("addPassword");
 const addRoles = document.getElementById("addRoles");
 
-let adminShowAllUsersResult = "";
+const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
+const deleteForm = document.getElementById("deleteForm");
+const deleteId = document.getElementById("deleteId");
+const deleteName = document.getElementById("deleteName");
+const deleteSurname = document.getElementById("deleteSurname");
+const deleteAge = document.getElementById("deleteAge");
+const deleteEmail = document.getElementById("deleteEmail");
+const deletePassword = document.getElementById("deletePassword");
+const deleteRoles = document.getElementById("deleteRoles");
 
+const updateModal = new bootstrap.Modal(document.getElementById("updateModal"));
+const updateForm = document.getElementById("updateForm");
+const updateId = document.getElementById("updateId");
+const updateName = document.getElementById("updateName");
+const updateSurname = document.getElementById("updateSurname");
+const updateAge = document.getElementById("updateAge");
+const updateEmail = document.getElementById("updateEmail");
+const updatePassword = document.getElementById("updatePassword");
+const updateRoles = document.getElementById("updateRoles");
+
+const adminContainer2 = document.getElementById("adminOneUserTableBody");
+
+let adminShowAllUsersResult = "";
+let adminShowOneUserResult = "";
+
+
+// Show All Users, GET_Method
 const showAllUsers = (users) => {
     users.forEach(user => {
         adminShowAllUsersResult += `
@@ -37,6 +60,8 @@ const showAllUsers = (users) => {
             </tr>
     `
     })
+
+
     adminContainer.innerHTML = adminShowAllUsersResult;
 }
 
@@ -50,6 +75,10 @@ fetch(url)
 addUserForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    const selectedValues = [].filter
+        .call(addRoles.options, option => option.selected)
+        .map(option => option.text);
+
     fetch(url, {
         method: 'POST',
         headers: {
@@ -61,7 +90,7 @@ addUserForm.addEventListener("submit", (e) => {
             age: addAge.value,
             email: addEmail.value,
             password: addPassword.value,
-            //roles: addRoles.value
+            roles: selectedValues
         })
     })
         .then(response => response.json())
@@ -85,15 +114,9 @@ const on = (element, event, selector, handler) => {
 
 
 // Delete User, DELETE_Method
-const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-const deleteForm = document.getElementById("deleteForm");
-const deleteId = document.getElementById("deleteId");
-const deleteName = document.getElementById("deleteName");
-const deleteSurname = document.getElementById("deleteSurname");
-const deleteAge = document.getElementById("deleteAge");
-const deleteEmail = document.getElementById("deleteEmail");
-const deletePassword = document.getElementById("deletePassword");
-const deleteRoles = document.getElementById("deleteRoles");
+const selectedValues2 = [].filter
+    .call(deleteRoles.options, option => option.selected)
+    .map(option => option.text);
 
 on(document, "click", ".deleteBtn", e => {
     const row = e.target.parentNode.parentNode;
@@ -102,16 +125,16 @@ on(document, "click", ".deleteBtn", e => {
     const surnameDeleteForm = row.children[2].innerHTML;
     const ageDeleteForm = row.children[3].innerHTML;
     const emailDeleteForm = row.children[4].innerHTML;
-    const passwordDeleteForm = row.children[5].innerHTML;
-    const rolesDeleteForm = row.children[6].innerHTML;
+    const passwordDeleteForm = row.children[5].innerHTML; // ???????
+    const rolesDeleteForm = selectedValues2; // ???????
 
     deleteId.value = idDeleteForm;
     deleteName.value = nameDeleteForm;
     deleteSurname.value = surnameDeleteForm;
     deleteAge.value = ageDeleteForm;
     deleteEmail.value = emailDeleteForm;
-    deletePassword.value = passwordDeleteForm;
-    deleteRoles.value = rolesDeleteForm;
+    deletePassword.value = passwordDeleteForm; // ???????
+    deleteRoles.value = rolesDeleteForm; // ???????
 
     deleteModal.show();
 });
@@ -130,16 +153,10 @@ deleteForm.addEventListener("submit", (e) => {
 })
 
 
-// Update User, PUT_Method ????????
-const updateModal = new bootstrap.Modal(document.getElementById("updateModal"));
-const updateForm = document.getElementById("updateForm");
-const updateId = document.getElementById("updateId");
-const updateName = document.getElementById("updateName");
-const updateSurname = document.getElementById("updateSurname");
-const updateAge = document.getElementById("updateAge");
-const updateEmail = document.getElementById("updateEmail");
-const updatePassword = document.getElementById("updatePassword");
-const updateRoles = document.getElementById("updateRoles");
+// Update User, PUT_Method
+const selectedValues3 = [].filter
+    .call(updateRoles.options, option => option.selected)
+    .map(option => option.text);
 
 on(document, "click", ".updateBtn", e => {
     const row2 = e.target.parentNode.parentNode;
@@ -148,16 +165,16 @@ on(document, "click", ".updateBtn", e => {
     const surnameEditForm = row2.children[2].innerHTML;
     const ageEditForm = row2.children[3].innerHTML;
     const emailEditForm = row2.children[4].innerHTML;
-    const passwordEditForm = row2.children[5].innerHTML;
-    const rolesEditForm = row2.children[6].innerHTML;
+    const passwordEditForm = row2.children[5].innerHTML; // ???????
+    const rolesEditForm = selectedValues3; // ???????
 
     updateId.value = idUpdateForm;
     updateName.value = nameEditForm;
     updateSurname.value = surnameEditForm;
     updateAge.value = ageEditForm;
     updateEmail.value = emailEditForm;
-    updatePassword.value = passwordEditForm;
-    // updateRoles.value = rolesEditForm;
+    updatePassword.value = passwordEditForm; // ???????
+    updateRoles.value = rolesEditForm; // ???????
 
     updateModal.show();
 })
@@ -176,11 +193,12 @@ updateForm.addEventListener("submit", (e) => {
             surname: updateSurname.value,
             age: updateAge.value,
             email: updateEmail.value,
-            password: updatePassword.value,
-            // roles: updateRoles.value
+            password: updatePassword.value, // ???????
+            roles: updateRoles.value // ???????
         })
     })
         .then(response => response.json())
+        .then(response => location.reload())
 
     event.currentTarget.submit();
     updateModal.hide();
@@ -188,9 +206,6 @@ updateForm.addEventListener("submit", (e) => {
 
 
 // Admin: Show One User, GET_Method
-const adminContainer2 = document.getElementById("adminOneUserTableBody");
-let adminShowOneUserResult = "";
-
 const adminShowOneUser = (principal => {
     adminShowOneUserResult = `
             <tr>
@@ -198,8 +213,8 @@ const adminShowOneUser = (principal => {
                 <td class="text-center">${principal.name}</td>
                 <td class="text-center">${principal.surname}</td>
                 <td class="text-center">${principal.age}</td>
-<td class="text-center">${principal.email}</td>
-<td class="text-center">${principal.roles}</td>
+                <td class="text-center">${principal.email}</td>
+                <td class="text-center">${principal.roles}</td>
 </tr>
 `
     adminContainer2.innerHTML = adminShowOneUserResult;

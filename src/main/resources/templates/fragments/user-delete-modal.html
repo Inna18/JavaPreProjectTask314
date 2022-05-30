@@ -33,10 +33,9 @@
                 </div>
                 <div class="form-group">
                     <label for="deleteRoles">Roles</label>
-                    <select multiple class="form-control" id="deleteRoles" readonly>
-                        <!--                        <option th:each="role : ${allRoles}"-->
-                        <!--                                th:selected="*{hasRole('__${role.id}__')}" th:text="${role.name}"-->
-                        <!--                                th:value="${role.id}">-->
+                    <select id="deleteRoles" multiple="multiple" class="form-control" readonly>
+                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        <option value="ROLE_ADMIN">ROLE_USER</option>
                     </select>
                 </div>
             </div>
