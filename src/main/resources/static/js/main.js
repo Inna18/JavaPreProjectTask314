@@ -41,6 +41,10 @@ let adminShowOneUserResult = "";
 // Show All Users, GET_Method
 const showAllUsers = (users) => {
     users.forEach(user => {
+        let roleName = "";
+        user.roles.forEach(role => {
+            roleName += role.name + " ";
+        });
         adminShowAllUsersResult += `
             <tr>
                 <td class="text-center">${user.id}</td>
@@ -48,7 +52,7 @@ const showAllUsers = (users) => {
                 <td class="text-center">${user.surname}</td>
                 <td class="text-center">${user.age}</td>
                 <td class="text-center">${user.email}</td>
-                <td class="text-center">${user.roles}</td>
+                <td class="text-center">${roleName}</td>
                 <td class="text-center">
                     <a class="updateBtn btn btn-info btn-sm mr-1">
                         Update
@@ -60,7 +64,6 @@ const showAllUsers = (users) => {
             </tr>
     `
     })
-
 
     adminContainer.innerHTML = adminShowAllUsersResult;
 }
@@ -79,6 +82,11 @@ addUserForm.addEventListener("submit", (e) => {
         .call(addRoles.options, option => option.selected)
         .map(option => option.text);
 
+    let rolesArr = {1: selectedValues[0], 2: selectedValues[1]};
+    console.log(rolesArr);
+    console.log(selectedValues[0]); // Admin
+    console.log(selectedValues[1]); // User
+
     fetch(url, {
         method: 'POST',
         headers: {
@@ -90,7 +98,7 @@ addUserForm.addEventListener("submit", (e) => {
             age: addAge.value,
             email: addEmail.value,
             password: addPassword.value,
-            roles: selectedValues
+            roles: rolesArr
         })
     })
         .then(response => response.json())
@@ -177,7 +185,7 @@ on(document, "click", ".updateBtn", e => {
     updateRoles.value = rolesEditForm; // ???????
 
     updateModal.show();
-})
+});
 
 updateForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -207,6 +215,10 @@ updateForm.addEventListener("submit", (e) => {
 
 // Admin: Show One User, GET_Method
 const adminShowOneUser = (principal => {
+    let roleName = "";
+    principal.roles.forEach(role => {
+        roleName += role.name + " ";
+    });
     adminShowOneUserResult = `
             <tr>
                 <td class="text-center">${principal.id}</td>
@@ -214,7 +226,7 @@ const adminShowOneUser = (principal => {
                 <td class="text-center">${principal.surname}</td>
                 <td class="text-center">${principal.age}</td>
                 <td class="text-center">${principal.email}</td>
-                <td class="text-center">${principal.roles}</td>
+                <td class="text-center">${roleName}</td>
 </tr>
 `
     adminContainer2.innerHTML = adminShowOneUserResult;

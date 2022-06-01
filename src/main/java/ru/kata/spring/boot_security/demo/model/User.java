@@ -50,9 +50,9 @@ public class User implements UserDetails {
     @NotEmpty(message = "Password field cannot be empty")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    //@NotEmpty(message = "User role cannot be empty")
+    @NotEmpty(message = "User role cannot be empty")
     private Set<Role> roles = new HashSet<>();
 
     public boolean hasRole(int roleId) {

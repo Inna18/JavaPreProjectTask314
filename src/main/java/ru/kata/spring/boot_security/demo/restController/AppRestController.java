@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.exceptionHandling.NoSuchUserException;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
@@ -48,12 +49,9 @@ public class AppRestController {
     }
 
     @PostMapping("/users")
-    public User addNewUser(@Valid @RequestBody User user, BindingResult result) {
-        try {
-            userService.saveUser(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public User addNewUser(@Valid @RequestBody User user) {
+        userService.saveUser(user);
+
         return user;
     }
 

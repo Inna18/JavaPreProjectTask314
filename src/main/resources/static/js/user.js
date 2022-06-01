@@ -4,6 +4,10 @@ const userContainer = document.getElementById("userOneUserTableBody");
 let userShowOneUserResult = "";
 
 const userShowOneUser = (principal => {
+    let roleName = "";
+    principal.roles.forEach(role => {
+        roleName += role.name + " ";
+    });
     userShowOneUserResult = `
             <tr>
                 <td class="text-center">${principal.id}</td>
@@ -11,7 +15,7 @@ const userShowOneUser = (principal => {
                 <td class="text-center">${principal.surname}</td>
                 <td class="text-center">${principal.age}</td>
                 <td class="text-center">${principal.email}</td>
-                <td class="text-center">${principal.roles}</td>
+                <td class="text-center">${roleName}</td>
             </tr>
     `
     userContainer.innerHTML = userShowOneUserResult;
