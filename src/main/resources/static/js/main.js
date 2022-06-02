@@ -82,10 +82,11 @@ addUserForm.addEventListener("submit", (e) => {
         .call(addRoles.options, option => option.selected)
         .map(option => option.text);
 
-    let rolesArr = {1: selectedValues[0], 2: selectedValues[1]};
-    console.log(rolesArr);
-    console.log(selectedValues[0]); // Admin
-    console.log(selectedValues[1]); // User
+    // ???
+    // let rolesArr = {1: selectedValues[0], 2: selectedValues[1]};
+    // console.log(rolesArr);
+    // console.log(selectedValues[0]); // Admin
+    // console.log(selectedValues[1]); // User
 
     fetch(url, {
         method: 'POST',
@@ -98,7 +99,7 @@ addUserForm.addEventListener("submit", (e) => {
             age: addAge.value,
             email: addEmail.value,
             password: addPassword.value,
-            roles: rolesArr
+            roles: selectedValues
         })
     })
         .then(response => response.json())
@@ -146,6 +147,8 @@ on(document, "click", ".deleteBtn", e => {
 
     deleteModal.show();
 });
+
+
 
 deleteForm.addEventListener("submit", (e) => {
     e.preventDefault();
