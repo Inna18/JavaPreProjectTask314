@@ -32,53 +32,39 @@ public class AppRestController {
 
     @GetMapping("/users")
     public List<User> showAllUsers() {
-        List<User> users = userService.findAll();
-
-        return users;
+        return userService.findAll();
     }
 
     @GetMapping("/users/{id}")
     public User getUser(@PathVariable Long id) {
-        User user = userService.findById(id);
-
-        if (user == null) {
-            throw new NoSuchUserException("There is no User with ID - " + id + " in DB");
-        }
-
-        return user;
+        return userService.findById(id);
     }
 
     @GetMapping("/user")
     public User getUserByEmail(Principal principal) {
-        User user = userService.findByEmail(principal.getName());
-
-        return user;
+        return userService.findByEmail(principal.getName());
     }
 
     @PostMapping("/users")
     public User addNewUser(@Valid @RequestBody User user) {
         userService.saveUser(user);
-
         return user;
     }
 
     @PutMapping("/users")
     public User updateUser(@Valid @RequestBody User user) {
         userService.saveUser(user);
-
         return user;
     }
 
 
     @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable Long id) {
-        boolean result = userService.deleteById(id);
-
-        if (result == false) {
-            throw new NoSuchUserException("There is no User with ID - " + id + " in DB");
+        try {
+            userService.deleteById(id);
+        } catch (NoSuchUserException e) {
+            e.getStackTrace();
         }
-
         return "User with ID - " + id + " was deleted successfully";
     }
-
 }

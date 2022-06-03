@@ -4,40 +4,40 @@
             <h5 class="modal-title">Delete user</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form id="deleteForm" class="updateOrDeleteForm" role="form">
-            <div class="modal-body">
+        <form id="deleteForm" role="form">
+            <div class="modal-body" id="deleteAttr">
                 <input type="hidden" name="_method" value="put">
-                <div class="form-group">
-                    <label for="deleteId">ID</label>
-                    <input type="text" class="form-control" id="deleteId" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="deleteName">Name</label>
-                    <input type="text" class="form-control" id="deleteName" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="deleteSurname">Surname</label>
-                    <input type="text" class="form-control" id="deleteSurname" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="deleteAge">Age</label>
-                    <input type="text" class="form-control" id="deleteAge" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="deleteEmail">Email</label>
-                    <input type="text" class="form-control" id="deleteEmail" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="deletePassword">Password</label>
-                    <input type="text" class="form-control" id="deletePassword" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="deleteRoles">Roles</label>
-                    <select id="deleteRoles" multiple="multiple" class="form-control" readonly>
-                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
-                        <option value="ROLE_ADMIN">ROLE_USER</option>
-                    </select>
-                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="deleteId">ID</label>-->
+<!--                    <input type="text" class="form-control" id="deleteId" readonly>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="deleteName">Name</label>-->
+<!--                    <input type="text" class="form-control" id="deleteName" readonly>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="deleteSurname">Surname</label>-->
+<!--                    <input type="text" class="form-control" id="deleteSurname" readonly>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="deleteAge">Age</label>-->
+<!--                    <input type="text" class="form-control" id="deleteAge" readonly>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="deleteEmail">Email</label>-->
+<!--                    <input type="text" class="form-control" id="deleteEmail" readonly>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="deletePassword">Password</label>-->
+<!--                    <input type="text" class="form-control" id="deletePassword" readonly>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="deleteRoles">Roles</label>-->
+<!--                    <select id="deleteRoles" multiple="multiple" class="form-control" readonly>-->
+<!--                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>-->
+<!--                        <option value="ROLE_ADMIN">ROLE_USER</option>-->
+<!--                    </select>-->
+<!--                </div>-->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

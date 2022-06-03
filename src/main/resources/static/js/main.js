@@ -14,23 +14,17 @@ const addRoles = document.getElementById("addRoles");
 
 const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
 const deleteForm = document.getElementById("deleteForm");
-const deleteId = document.getElementById("deleteId");
-const deleteName = document.getElementById("deleteName");
-const deleteSurname = document.getElementById("deleteSurname");
-const deleteAge = document.getElementById("deleteAge");
-const deleteEmail = document.getElementById("deleteEmail");
-const deletePassword = document.getElementById("deletePassword");
-const deleteRoles = document.getElementById("deleteRoles");
 
 const updateModal = new bootstrap.Modal(document.getElementById("updateModal"));
 const updateForm = document.getElementById("updateForm");
-const updateId = document.getElementById("updateId");
-const updateName = document.getElementById("updateName");
-const updateSurname = document.getElementById("updateSurname");
-const updateAge = document.getElementById("updateAge");
-const updateEmail = document.getElementById("updateEmail");
-const updatePassword = document.getElementById("updatePassword");
-const updateRoles = document.getElementById("updateRoles");
+let updateId = "";
+let updateName = "";
+let updateSurname = "";
+let updateAge = "";
+let updateEmail = "";
+let updatePassword = "";
+let updateAdminRole = "";
+let updateUserRole = "";
 
 const adminContainer2 = document.getElementById("adminOneUserTableBody");
 
@@ -80,13 +74,7 @@ addUserForm.addEventListener("submit", (e) => {
 
     const selectedValues = [].filter
         .call(addRoles.options, option => option.selected)
-        .map(option => option.text);
-
-    // ???
-    // let rolesArr = {1: selectedValues[0], 2: selectedValues[1]};
-    // console.log(rolesArr);
-    // console.log(selectedValues[0]); // Admin
-    // console.log(selectedValues[1]); // User
+        .map(option => option.value);
 
     fetch(url, {
         method: 'POST',
@@ -123,37 +111,64 @@ const on = (element, event, selector, handler) => {
 
 
 // Delete User, DELETE_Method
-const selectedValues2 = [].filter
-    .call(deleteRoles.options, option => option.selected)
-    .map(option => option.text);
-
+let deleteResult = "";
+const deleteContainer = document.getElementById("deleteAttr");
+const fillDeleteForm = (user => {
+    deleteResult =
+    `
+            <div class="form-group">
+                <label for="deleteId">ID</label>
+                <input type="text" class="form-control" id="deleteId" value="${user.id}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="deleteName">Name</label>
+                <input type="text" class="form-control" id="deleteName" value="${user.name}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="deleteSurname">Surname</label>
+                <input type="text" class="form-control" id="deleteSurname" value="${user.surname}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="deleteAge">Age</label>
+                <input type="text" class="form-control" id="deleteAge" value="${user.age}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="deleteEmail">Email</label>
+                <input type="text" class="form-control" id="deleteEmail" value="${user.email}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="deletePassword">Password</label>
+                <input type="password" class="form-control" id="deletePassword" value="${user.password}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="deleteRoles">Roles</label>
+                <select id="deleteRoles" multiple="multiple" class="form-control" readonly>
+                    <option value="${user.roles[0]}">ROLE_ADMIN</option>
+                    <option value="${user.roles[1]}">ROLE_USER</option>
+                </select>
+            </div>
+    `
+    deleteContainer.innerHTML = deleteResult;
+});
+let tempId = "";
+let idDeleteForm = "";
 on(document, "click", ".deleteBtn", e => {
     const row = e.target.parentNode.parentNode;
-    const idDeleteForm = row.firstElementChild.innerHTML;
-    const nameDeleteForm = row.children[1].innerHTML;
-    const surnameDeleteForm = row.children[2].innerHTML;
-    const ageDeleteForm = row.children[3].innerHTML;
-    const emailDeleteForm = row.children[4].innerHTML;
-    const passwordDeleteForm = row.children[5].innerHTML; // ???????
-    const rolesDeleteForm = selectedValues2; // ???????
+    idDeleteForm = row.firstElementChild.innerHTML;
 
-    deleteId.value = idDeleteForm;
-    deleteName.value = nameDeleteForm;
-    deleteSurname.value = surnameDeleteForm;
-    deleteAge.value = ageDeleteForm;
-    deleteEmail.value = emailDeleteForm;
-    deletePassword.value = passwordDeleteForm; // ???????
-    deleteRoles.value = rolesDeleteForm; // ???????
+    fetch(url + "/" + idDeleteForm)
+        .then(response => response.json())
+        .then(data => fillDeleteForm(data))
+        .catch(error => console.log(error))
 
     deleteModal.show();
 });
-
-
+tempId = idDeleteForm;
 
 deleteForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    fetch(url + "/" + deleteId.value, {
+    fetch(url + "/" + idDeleteForm, {
         method: "DELETE",
     })
         .then(response => response.json())
@@ -165,27 +180,68 @@ deleteForm.addEventListener("submit", (e) => {
 
 
 // Update User, PUT_Method
-const selectedValues3 = [].filter
-    .call(updateRoles.options, option => option.selected)
-    .map(option => option.text);
+let updateResult = "";
+const updateContainer = document.getElementById("updateAttr");
+const fillUpdateForm = (user => {
+    updateResult =
+        `
+            <div class="form-group">
+                <label for="updateId">ID</label>
+                <input type="number" class="form-control" id="updateId" value="${user.id}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="updateName">Name</label>
+                <input type="text" class="form-control" id="updateName" value="${user.name}">
+            </div>
+            <div class="form-group">
+                <label for="updateSurname">Surname</label>
+                <input type="text" class="form-control" id="updateSurname" value="${user.surname}">
+            </div>
+            <div class="form-group">
+                <label for="updateAge">Age</label>
+                <input type="number" class="form-control" id="updateAge" value="${user.age}">
+            </div>
+            <div class="form-group">
+                <label for="updateEmail">Email</label>
+                <input type="text" class="form-control" id="updateEmail" value="${user.email}">
+            </div>
+            <div class="form-group">
+                <label for="updatePassword">Password</label>
+                <input type="password" class="form-control" id="updatePassword" value="${user.password}">
+            </div>
+            <div class="form-group">
+                <label for="updateRoles">Roles</label>
+                    <select id="updateRoles" multiple="multiple" class="form-control">
+                        <option id="updateAdminRole" value="${user.roles[0]}">ROLE_ADMIN</option>
+                        <option id="updateUserRole" value="${user.roles[1]}">ROLE_USER</option>
+                    </select>
+            </div>
+    `
+    updateContainer.innerHTML = updateResult;
+
+    updateId = document.getElementById("updateId");
+    updateName = document.getElementById("updateName");
+    updateSurname = document.getElementById("updateSurname");
+    updateAge = document.getElementById("updateAge");
+    updateEmail = document.getElementById("updateEmail");
+    updatePassword = document.getElementById("updatePassword");
+    updateAdminRole = document.getElementById("updateAdminRole");
+    updateUserRole = document.getElementById("updateUserRole");
+});
+
+let idUpdateForm = "";
+// const selectedValues3 = [].filter
+//     .call(updateRoles.options, option => option.selected)
+//     .map(option => option.text);
 
 on(document, "click", ".updateBtn", e => {
     const row2 = e.target.parentNode.parentNode;
-    const idUpdateForm = row2.children[0].innerHTML;
-    const nameEditForm = row2.children[1].innerHTML;
-    const surnameEditForm = row2.children[2].innerHTML;
-    const ageEditForm = row2.children[3].innerHTML;
-    const emailEditForm = row2.children[4].innerHTML;
-    const passwordEditForm = row2.children[5].innerHTML; // ???????
-    const rolesEditForm = selectedValues3; // ???????
+    idUpdateForm = row2.children[0].innerHTML;
 
-    updateId.value = idUpdateForm;
-    updateName.value = nameEditForm;
-    updateSurname.value = surnameEditForm;
-    updateAge.value = ageEditForm;
-    updateEmail.value = emailEditForm;
-    updatePassword.value = passwordEditForm; // ???????
-    updateRoles.value = rolesEditForm; // ???????
+    fetch(url + "/" + idUpdateForm)
+        .then(response => response.json())
+        .then(data => fillUpdateForm(data))
+        .catch(error => console.log(error))
 
     updateModal.show();
 });
@@ -204,8 +260,11 @@ updateForm.addEventListener("submit", (e) => {
             surname: updateSurname.value,
             age: updateAge.value,
             email: updateEmail.value,
-            password: updatePassword.value, // ???????
-            roles: updateRoles.value // ???????
+            password: updatePassword.value,
+            roles: [
+                updateAdminRole.value,
+                updateUserRole.value,
+            ]
         })
     })
         .then(response => response.json())

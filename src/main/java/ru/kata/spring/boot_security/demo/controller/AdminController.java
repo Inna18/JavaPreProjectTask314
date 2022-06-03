@@ -21,25 +21,21 @@ public class AdminController {
 
     @GetMapping
     public String showAllUsers() {
-
         return "all-users";
     }
 
     @PostMapping
     public String addUser() {
-
         return "redirect:/admin";
     }
 
     @PutMapping
     public String updateUser() {
-
         return "redirect:/admin";
     }
 
     @GetMapping("/delete")
     public String deleteUser() {
-
         return "redirect:/admin";
     }
 

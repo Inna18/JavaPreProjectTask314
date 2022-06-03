@@ -17,7 +17,7 @@ public interface UserService {
 
     boolean updateUser(User user);
 
-    boolean deleteById(Long id);
+    void deleteById(Long id);
 
     Iterable<Role> findAllRoles();
 }

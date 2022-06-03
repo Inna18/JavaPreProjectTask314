@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.kata.spring.boot_security.demo.exceptionHandling.NoSuchUserException;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.dao.RoleDao;
@@ -42,6 +43,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
+
         return user;
     }
 
@@ -58,13 +60,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User findById(Long id) {
         Optional<User> userFromDB = userDao.findById(id);
-        return userFromDB.orElse(new User());
+        return userFromDB.orElseThrow(() -> new NoSuchUserException("There is no User with ID - " + id + " in DB"));
     }
 
     @Override
     public User findByEmail(String email) {
-        User userFromDB = userDao.findByEmail(email);
-        return userFromDB;
+        return userDao.findByEmail(email);
     }
 
     @Override
@@ -82,11 +83,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        if (userDao.findById(id).isPresent()) {
-            userDao.deleteById(id);
-            return true;
-        }
-        return false;
+    public void deleteById(Long id) {
+        userDao.deleteById(id);
     }
 }
