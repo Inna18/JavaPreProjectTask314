@@ -20,4 +20,6 @@ public interface UserService {
     void deleteById(Long id);
 
     Iterable<Role> findAllRoles();
+
+    Role findRoleByName(String name);
 }

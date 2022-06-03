@@ -53,7 +53,7 @@ public class AppRestController {
 
     @PutMapping("/users")
     public User updateUser(@Valid @RequestBody User user) {
-        userService.saveUser(user);
+        userService.updateUser(user);
         return user;
     }
 

@@ -11,6 +11,9 @@ const addAge = document.getElementById("addAge");
 const addEmail = document.getElementById("addEmail");
 const addPassword = document.getElementById("addPassword");
 const addRoles = document.getElementById("addRoles");
+const addAdminRole = document.getElementById("addAdminRole");
+const addUserRole = document.getElementById("addUserRole");
+
 
 const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
 const deleteForm = document.getElementById("deleteForm");
@@ -23,6 +26,7 @@ let updateSurname = "";
 let updateAge = "";
 let updateEmail = "";
 let updatePassword = "";
+let updateRoles = "";
 let updateAdminRole = "";
 let updateUserRole = "";
 
@@ -87,7 +91,9 @@ addUserForm.addEventListener("submit", (e) => {
             age: addAge.value,
             email: addEmail.value,
             password: addPassword.value,
-            roles: selectedValues
+            roles: [
+                selectedValues[0]
+            ]
         })
     })
         .then(response => response.json())
@@ -212,8 +218,8 @@ const fillUpdateForm = (user => {
             <div class="form-group">
                 <label for="updateRoles">Roles</label>
                     <select id="updateRoles" multiple="multiple" class="form-control">
-                        <option id="updateAdminRole" value="${user.roles[0]}">ROLE_ADMIN</option>
-                        <option id="updateUserRole" value="${user.roles[1]}">ROLE_USER</option>
+                        <option id="updateAdminRole" value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        <option id="updateUserRole" value="ROLE_USER">ROLE_USER</option>
                     </select>
             </div>
     `
@@ -225,15 +231,14 @@ const fillUpdateForm = (user => {
     updateAge = document.getElementById("updateAge");
     updateEmail = document.getElementById("updateEmail");
     updatePassword = document.getElementById("updatePassword");
+    updateRoles = document.getElementById("updateRoles");
     updateAdminRole = document.getElementById("updateAdminRole");
     updateUserRole = document.getElementById("updateUserRole");
+
+
 });
 
 let idUpdateForm = "";
-// const selectedValues3 = [].filter
-//     .call(updateRoles.options, option => option.selected)
-//     .map(option => option.text);
-
 on(document, "click", ".updateBtn", e => {
     const row2 = e.target.parentNode.parentNode;
     idUpdateForm = row2.children[0].innerHTML;
@@ -262,8 +267,7 @@ updateForm.addEventListener("submit", (e) => {
             email: updateEmail.value,
             password: updatePassword.value,
             roles: [
-                updateAdminRole.value,
-                updateUserRole.value,
+                updateRoles.value
             ]
         })
     })

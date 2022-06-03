@@ -58,6 +58,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public Role findRoleByName(String name) {
+        return roleDao.findRoleByName(name);
+    }
+
+    @Override
     public User findById(Long id) {
         Optional<User> userFromDB = userDao.findById(id);
         return userFromDB.orElseThrow(() -> new NoSuchUserException("There is no User with ID - " + id + " in DB"));
@@ -76,9 +81,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean updateUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userDao.save(user);
+    public boolean updateUser(User updatedUser) {
+        if (!updatedUser.getPassword().equals(userDao.getById(updatedUser.getId()).getPassword())) {
+            updatedUser.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword()));
+        }
+        userDao.save(updatedUser);
         return true;
     }
 
