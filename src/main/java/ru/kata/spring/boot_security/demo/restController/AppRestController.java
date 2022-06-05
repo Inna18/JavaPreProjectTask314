@@ -57,7 +57,6 @@ public class AppRestController {
         return user;
     }
 
-
     @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable Long id) {
         try {
@@ -66,5 +65,10 @@ public class AppRestController {
             e.getStackTrace();
         }
         return "User with ID - " + id + " was deleted successfully";
+    }
+
+    @GetMapping("/roles")
+    public List<User> showAllRoles() {
+        return userService.findAll();
     }
 }

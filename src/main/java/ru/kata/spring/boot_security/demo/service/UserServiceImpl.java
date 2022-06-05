@@ -58,8 +58,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Role findRoleByName(String name) {
-        return roleDao.findRoleByName(name);
+    public void saveRole(String name) {
+        try {
+            Role role = roleDao.findRoleByName(name);
+            roleDao.save(role);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

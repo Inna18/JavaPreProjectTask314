@@ -21,5 +21,5 @@ public interface UserService {
 
     Iterable<Role> findAllRoles();
 
-    Role findRoleByName(String name);
+    void saveRole(String name);
 }
