@@ -11,8 +11,6 @@ const addAge = document.getElementById("addAge");
 const addEmail = document.getElementById("addEmail");
 const addPassword = document.getElementById("addPassword");
 const addRoles = document.getElementById("addRoles");
-const addAdminRole = document.getElementById("addAdminRole");
-const addUserRole = document.getElementById("addUserRole");
 
 
 const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
@@ -27,8 +25,6 @@ let updateAge = "";
 let updateEmail = "";
 let updatePassword = "";
 let updateRoles = "";
-let updateAdminRole = "";
-let updateUserRole = "";
 
 const adminContainer2 = document.getElementById("adminOneUserTableBody");
 
@@ -80,16 +76,14 @@ addUserForm.addEventListener("submit", (e) => {
         .call(addRoles.options, option => option.selected)
         .map(option => option.value);
 
-    console.log(selectedValues);
     let selectedRoles = [];
     selectedValues.forEach(value => {
         let roleObj = {
-            "name" : value
+            "id" : value
         }
         selectedRoles.push(roleObj)
     })
 
-    console.log(typeof selectedRoles)
     console.log(selectedRoles)
 
     fetch(url, {
@@ -227,9 +221,9 @@ const fillUpdateForm = (user => {
             </div>
             <div class="form-group">
                 <label for="updateRoles">Roles</label>
-                    <select id="updateRoles" class="form-control" multiple>
-                        <option id="updateAdminRole" value="ROLE_ADMIN">ROLE_ADMIN</option>
-                        <option id="updateUserRole" value="ROLE_USER">ROLE_USER</option>
+                    <select id="updateRoles" class="form-control" multiple required>
+                        <option id="updateAdmin" value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        <option id="updateUser" value="ROLE_USER">ROLE_USER</option>
                     </select>
             </div>
     `
@@ -242,10 +236,6 @@ const fillUpdateForm = (user => {
     updateEmail = document.getElementById("updateEmail");
     updatePassword = document.getElementById("updatePassword");
     updateRoles = document.getElementById("updateRoles");
-    updateAdminRole = document.getElementById("updateAdminRole");
-    updateUserRole = document.getElementById("updateUserRole");
-
-
 });
 
 let idUpdateForm = "";
@@ -264,6 +254,23 @@ on(document, "click", ".updateBtn", e => {
 updateForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    const selectedValues2 = [].filter
+        .call(updateRoles.options, option => option.selected)
+        .map(option => option.value);
+
+    let selectedRoles2 = [];
+    selectedValues2.forEach(value => {
+        let id;
+        value === "ROLE_ADMIN" ? id = 1 : id = 2;
+        let roleObj2 = {
+            "id" : id,
+            "name" : value
+        }
+        selectedRoles2.push(roleObj2)
+    })
+
+    console.log(selectedRoles2);
+
     fetch(url, {
         method: "PUT",
         headers: {
@@ -276,9 +283,7 @@ updateForm.addEventListener("submit", (e) => {
             age: updateAge.value,
             email: updateEmail.value,
             password: updatePassword.value,
-            roles: [
-                updateRoles.value
-            ]
+            roles: selectedRoles2
         })
     })
         .then(response => response.json())

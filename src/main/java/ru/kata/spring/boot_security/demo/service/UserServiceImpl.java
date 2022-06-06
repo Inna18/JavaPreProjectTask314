@@ -18,7 +18,6 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
@@ -35,7 +34,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userDao.findByEmail(email);
@@ -49,7 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<User> findAll() {
-        return userDao.findAll();
+        return userDao.findAllByOrderByIdAsc();
     }
 
     @Override
